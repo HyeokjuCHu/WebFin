@@ -45,11 +45,8 @@
         </div>
 
         <div class="form-group">
-            <label for="publishP">공개 여부</label>
-            <select class="form-control" id="publishP" name="publishP">
-                <option value="true" <%= image.isPublishP() ? "selected" : "" %>>공개</option>
-                <option value="false" <%= !image.isPublishP() ? "selected" : "" %>>비공개</option>
-            </select>
+            <label for="publishP">올린 사람</label>
+            <input type="text" class="form-control" id="publishP" name="publishP" value="<%= image.getPublishP() %>" required>
         </div>
 
         <div class="form-group">
