@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Image">
+    <insert id="insertImage">
+        insert into image (fileName, uploadDate, publishP, camType, resolution)
+        values
+            (#{fileName}, #{uploadDate}, #{publishP}, #{camType}, #{resolution})
+    </insert>
+
+    <select id="getImageById" resultType="org.example.webfinal.ImageVO">
+        SELECT * FROM image WHERE id = #{id}
+    </select>
+
+    <update id="updateImage" parameterType="org.example.webfinal.ImageVO">
+        UPDATE image
+        SET fileName = #{fileName}, publishP = #{publishP}, camType = #{camType}, resolution = #{resolution}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getAllImages" resultType="org.example.webfinal.ImageVO">
+        SELECT * FROM image
+    </select>
+
+</mapper>
