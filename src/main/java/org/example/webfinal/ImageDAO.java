@@ -8,24 +8,30 @@ import java.util.List;
 
 @Repository
 public class ImageDAO {
-
     @Autowired
     SqlSession sqlSession;
 
-    public int insertImage(ImageVO vo){
-        int result = sqlSession.update("Image.InsertImage",vo);
-        return result;
+    public int insertImage(ImageVO vo) {
+        return sqlSession.insert("Image.insertImage", vo);
     }
+
     public ImageVO getImageById(int id) {
-        return sqlSession.selectOne("Image.getImageById", id);  // SQL 쿼리 매핑
+        return sqlSession.selectOne("Image.getImageById", id);
     }
 
     public int updateImage(ImageVO vo) {
-        return sqlSession.update("Image.updateImage", vo);  // SQL 쿼리로 업데이트 수행
+        return sqlSession.update("Image.updateImage", vo);
     }
 
     public List<ImageVO> getAllImages() {
-        return sqlSession.selectList("Image.getAllImages");  // Select all images from database
+        return sqlSession.selectList("Image.getAllImages");
     }
 
+    public int deleteImage(int id) { // delete 메서드 구현
+        return sqlSession.delete("Image.deleteImage", id);
+    }
+
+    public List<ImageVO> searchImages(String query) {
+        return sqlSession.selectList("Image.searchImages", "%" + query + "%");
+    }
 }

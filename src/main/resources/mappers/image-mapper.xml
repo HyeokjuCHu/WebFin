@@ -2,10 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Image">
-    <insert id="insertImage">
-        insert into image (fileName, uploadDate, publishP, camType, resolution)
-        values
-            (#{fileName}, #{uploadDate}, #{publishP}, #{camType}, #{resolution})
+    <insert id="insertImage" parameterType="org.example.webfinal.ImageVO">
+        INSERT INTO image (user_id, filename, title, description, likes, views, created_at, updated_at)
+        VALUES (#{user_id}, #{filename}, #{title}, #{description}, #{likes}, #{views}, #{created_at}, #{updated_at})
     </insert>
 
     <select id="getImageById" resultType="org.example.webfinal.ImageVO">
@@ -14,12 +13,26 @@
 
     <update id="updateImage" parameterType="org.example.webfinal.ImageVO">
         UPDATE image
-        SET fileName = #{fileName}, publishP = #{publishP}, camType = #{camType}, resolution = #{resolution}
+        SET user_id = #{user_id},
+            filename = #{filename},
+            title = #{title},
+            description = #{description},
+            likes = #{likes},
+            views = #{views},
+            updated_at = #{updated_at}
         WHERE id = #{id}
     </update>
 
     <select id="getAllImages" resultType="org.example.webfinal.ImageVO">
         SELECT * FROM image
+    </select>
+
+    <delete id="deleteImage" parameterType="int">
+        DELETE FROM image WHERE id = #{id}
+    </delete>
+
+    <select id="searchImages" parameterType="String" resultType="org.example.webfinal.ImageVO">
+        SELECT * FROM image WHERE title LIKE #{value} OR description LIKE #{value}
     </select>
 
 </mapper>

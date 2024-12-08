@@ -20,16 +20,28 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageVO getImageById(int id) {
-        return imageDAO.getImageById(id);  // DAO에서 데이터를 가져옴
+        return imageDAO.getImageById(id);
     }
 
     @Override
     public int updateImage(ImageVO vo) {
-        return imageDAO.updateImage(vo);  // DAO에서 업데이트 수행
+        return imageDAO.updateImage(vo);
     }
 
     @Override
     public List<ImageVO> getAllImages() {
-        return imageDAO.getAllImages();  // Retrieve all images from the DAO
+        return imageDAO.getAllImages();
     }
+
+    @Override
+    public void deleteImage(int id) {
+        imageDAO.deleteImage(id);
+    }
+
+    @Override
+    public List<ImageVO> searchImages(String query) {
+        return imageDAO.searchImages(query);
+    }
+
+
 }

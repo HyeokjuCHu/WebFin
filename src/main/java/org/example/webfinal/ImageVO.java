@@ -1,15 +1,17 @@
 package org.example.webfinal;
 
+import java.sql.Timestamp;
+
 public class ImageVO {
     private int id;
-    private String fileName;
-    private String uploadDate;
-    private String publishP;
-    private int likeCnt;
-    private int viewCnt;
-    private int downCnt;
-    private String camType;
-    private String resolution;
+    private String user_id;
+    private String filename;
+    private String title;
+    private String description;
+    private int likes;
+    private int views;
+    private Timestamp created_at;
+    private Timestamp updated_at;
 
     public int getId() {
         return id;
@@ -19,67 +21,67 @@ public class ImageVO {
         this.id = id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public String getUploadDate() {
-        return uploadDate;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setUploadDate(String uploadDate) {
-        this.uploadDate = uploadDate;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
-    public String getPublishP() {
-        return publishP;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPublishP(String publishP) {
-        this.publishP = publishP;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getLikeCnt() {
-        return likeCnt;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLikeCnt(int likeCnt) {
-        this.likeCnt = likeCnt;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int getViewCnt() {
-        return viewCnt;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setViewCnt(int viewCnt) {
-        this.viewCnt = viewCnt;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
-    public int getDownCnt() {
-        return downCnt;
+    public int getViews() {
+        return views;
     }
 
-    public void setDownCnt(int downCnt) {
-        this.downCnt = downCnt;
+    public void setViews(int views) {
+        this.views = views;
     }
 
-    public String getCamType() {
-        return camType;
+    public Timestamp getCreated_at() {
+        return created_at;
     }
 
-    public void setCamType(String camType) {
-        this.camType = camType;
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
-    public String getResolution() {
-        return resolution;
+    public Timestamp getUpdated_at() {
+        return updated_at;
     }
 
-    public void setResolution(String resolution) {
-        this.resolution = resolution;
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
     }
 }

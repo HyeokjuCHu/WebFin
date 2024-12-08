@@ -37,4 +37,16 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!-- fileUploadServlet 설정 제거 -->
+    <!--
+    <servlet>
+        <servlet-name>fileUploadServlet</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.FileUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fileUploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+    -->
 </web-app>

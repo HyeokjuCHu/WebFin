@@ -7,4 +7,7 @@ public interface ImageService {
     public ImageVO getImageById(int id);
     public int updateImage(ImageVO vo);
     public List<ImageVO> getAllImages();
+    public void deleteImage(int id);
+    List<ImageVO> searchImages(String query);
+
 }
