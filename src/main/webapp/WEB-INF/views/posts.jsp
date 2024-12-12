@@ -7,104 +7,67 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>free board</title>
-    <style>
-        #list {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-        #list td, #list th {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align:center;
-        }
-        #list tr:nth-child(even){background-color: #f2f2f2;}
-        #list tr:hover {background-color: #ddd;}
-        #list th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: center;
-            background-color: #006bb3;
-            color: white;
-        }
-        .logout-btn {
-            float: right;
-            margin: 10px;
-            padding: 5px 10px;
-            background-color: #006bb3;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .logout-btn:hover {
-            background-color: #004a80;
-        }
-        .image-thumbnail {
-            width: 100px;
-            height: auto;
-        }
-    </style>
+    <title>Image Sharing Board</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script>
-        function delete_ok(id){
-            var a = confirm("정말로 삭제하겠습니까?");
-            if(a) location.href='./delete/' + id;
+        function delete_ok(id) {
+            var a = confirm("Are you sure you want to delete this post?");
+            if (a) location.href = './delete/' + id;
         }
     </script>
 </head>
 <body>
-<h1>자유게시판</h1>
-<a href="../login/logout" class="logout-btn">Logout</a>
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-center mb-0">Image Sharing Board</h1>
+        <a href="../login/logout" class="btn btn-dark">Logout</a>
+    </div>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="./add" class="btn btn-primary">Add New Post</a>
+        <!-- Search Bar -->
+        <form class="d-flex" action="./list" method="get">
+            <input class="form-control me-2" type="text" name="keyword" placeholder="Search..." value="${param.keyword}">
+            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn btn-secondary ms-2" type="button" onclick="location.href='./list';">Reset</button>
+        </form>
+    </div>
 
-<!-- 검색 바 추가 -->
-<form action="./list" method="get" style="margin-bottom: 20px;">
-    <label>
-        <input type="text" name="keyword" placeholder="Search..." value="${param.keyword}" />
-    </label>
-    <button type="submit">Search</button>
-    <button type="button" onclick="location.href='./list';">Reset</button>
-</form>
+    <!-- Cards Layout for Posts -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <c:forEach items="${list}" var="u">
+            <div class="col">
+                <div class="card h-100"><a href="view/${u.id}" class="text-decoration-none">
+                    <c:if test="${not empty u.filename}">
+                        <img src="${pageContext.request.contextPath}/upload/${u.filename}" class="card-img-top" alt="Image">
+                    </c:if>
+                    <c:if test="${empty u.filename}">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image">
+                    </c:if>
+                    <div class="card-body">
+                        <h5 class="card-title">${u.title}</h5>
+                        <p class="card-text">${u.description}</p>
+                        <p class="text-muted mb-0">By: ${u.userid}</p>
+                        <small class="text-muted">Posted: <fmt:formatDate value="${u.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></small><br/>
+                        <small class="text-muted">Updated: <fmt:formatDate value="${u.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/></small>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Views: ${u.views}</small>
+                            <small class="text-muted ms-2">Likes: ${u.likes}</small>
+                        </div>
+                        <div>
+                            <a href="edit/${u.id}" class="btn btn-secondary btn-sm me-2">Edit</a>
+                            <button class="btn btn-dark btn-sm" onclick="delete_ok('${u.id}')">Delete</button>
+                        </div>
+                    </div>
+                </a></div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
 
-<table id="list" width="90%">
-    <tr>
-        <th>No</th>
-        <th>Title</th>
-        <th>Writer</th>
-        <th>Description</th>
-        <th>Image</th>
-        <th>Created Time</th>
-        <th>Views</th>
-        <th>Likes</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    <c:forEach items="${list}" var="u" varStatus="status">
-        <tr>
-            <td>${totalcnt-status.index}</td>
-            <td><a href="view/${u.id}">${u.title}</a></td>
-            <td>${u.userid}</td>
-            <td>${u.description}</td>
-            <td>
-                <!-- 이미지 파일 경로를 확인하고, 이미지가 있다면 표시 -->
-                <c:if test="${not empty u.filename}">
-                    <img src="${pageContext.request.contextPath}/upload/${u.filename}" class="image-thumbnail" alt="Image"/>
-                </c:if>
-                <c:if test="${empty u.filename}">
-                    No Image
-                </c:if>
-            </td>
-            <td>
-                <fmt:formatDate value="${u.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
-            </td>
-            <td>${u.views}</td>
-            <td>${u.likes}</td>
-            <td><a href="edit/${u.id}">Edit</a></td>
-            <td><a href="javascript:delete_ok('${u.id}')">Delete</a></td>
-        </tr>
-    </c:forEach>
-</table>
-<br/><a href="./add">Add New Post</a>
+<!-- Add Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

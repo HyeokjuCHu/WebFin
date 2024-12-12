@@ -7,28 +7,47 @@
 <head>
     <meta charset="UTF-8">
     <title>View Post</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>${post.title}</h1>
-<p>By: ${post.userid}</p>
-<p>${post.description}</p>
-<p><strong>Created:</strong> <fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-<p><strong>Views:</strong> ${post.views}</p>
-<p><strong>Likes:</strong> ${post.likes}</p> <!-- 좋아요 수 표시 -->
-<c:if test="${not empty post.filename}">
-    <img src="${pageContext.request.contextPath}/upload/${post.filename}" alt="Post Image" width="500"/>
-    <!-- 다운로드 버튼 추가 -->
-    <form action="${pageContext.request.contextPath}/download/${post.id}" method="get">
-        <button type="submit">Download Image</button>
-    </form>
-</c:if>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h1 class="card-title text-center">${post.title}</h1>
+        <p class="text-muted text-center">By: ${post.userid}</p>
 
-<!-- 좋아요 버튼 추가 -->
-<form action="like/${post.id}" method="post">
-    <button type="submit">Like</button>
-</form>
+        <div class="mt-4">
+            <p class="lead">${post.description}</p>
+        </div>
 
-<br/><br/>
-<a href="../list">Back to List</a>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Created:</strong> <fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></li>
+            <li class="list-group-item"><strong>Views:</strong> ${post.views}</li>
+            <li class="list-group-item"><strong>Likes:</strong> ${post.likes}</li>
+        </ul>
+
+        <div class="text-center mt-4">
+            <c:if test="${not empty post.filename}">
+                <img src="${pageContext.request.contextPath}/upload/${post.filename}" alt="Post Image" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                <form action="${pageContext.request.contextPath}/download/${post.id}" method="get" class="mt-3">
+                    <button type="submit" class="btn btn-secondary">Download Image</button>
+                </form>
+            </c:if>
+        </div>
+
+        <div class="text-center mt-4">
+            <form action="like/${post.id}" method="post">
+                <button type="submit" class="btn btn-primary">Like</button>
+            </form>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="../list" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
